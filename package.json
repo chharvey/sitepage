@@ -1,0 +1,19 @@
+{
+  "name": "sitepage",
+  "version": "0.0.0",
+  "description": "A page in a sitemap.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chharvey/sitepage.git"
+  },
+  "author": "Chris Harvey <chrisharvey2pi@gmail.com> (https://chharvey.github.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chharvey/sitepage/issues"
+  },
+  "homepage": "https://github.com/chharvey/sitepage#readme"
+}
