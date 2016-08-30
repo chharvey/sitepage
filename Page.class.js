@@ -95,7 +95,7 @@ module.exports = (function () {
     return this
   }
   Page.prototype.find = function find(url) {
-    return this.pages.find(function (item) { return item.url === url })
+    return this.pages.find(function (item) { return item._url === url })
       || (function (self) {
         var ancestor = self.pages.find(function (item) { return item.find(url) })
         return (ancestor) ? ancestor.find(url) : null

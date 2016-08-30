@@ -18,7 +18,9 @@ module.exports = (function () {
     if (!self._was_initialized) {
       self._was_initialized = true
       return self
-        .add(new Page({ name: self.name, url: 'index.html' }))
+        .add(new Page({ name: self.getName(), url: 'index.html' })
+          .setDescription(self.getDescription())
+        )
         .add(new Page({ name: 'Visual Design', url: 'visual.html' })
           .setDescription('Color and font schemes, look-and-feel, overall voice and tone.')
         )
