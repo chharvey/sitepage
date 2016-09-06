@@ -3,22 +3,22 @@ module.exports = (function () {
   function Page($pageinfo) {
     var self = this
     $pageinfo = $pageinfo || {} // NOTE constructor overloading
-    self._name = $pageinfo.name
-    self._url  = $pageinfo.url
+    self._NAME = $pageinfo.name
+    self._URL  = $pageinfo.url
     self._title       = ''
     self._description = ''
     self._keywords    = []
     self._is_hidden   = false
-    self.pages        = []
+    self._pages       = []
   }
 
   // ACCESSOR FUNCTIONS
   Page.prototype.name = function name() {
-    return this._name
+    return this._NAME
   }
 
   Page.prototype.url = function url() {
-    return this._url
+    return this._URL
   }
 
   Page.prototype.title = function title(arg) {
@@ -82,11 +82,11 @@ module.exports = (function () {
 
   // METHODS
   Page.prototype.add = function add($page) {
-    this.pages.push($page)
+    this._pages.push($page)
     return this
   }
   Page.prototype.remove = function remove(arg) {
-    var index = this.pages.indexOf((function () {
+    var index = this._pages.indexOf((function () {
     var page
     if (typeof arg === 'function') {
       page = arg.call(this)
@@ -97,22 +97,22 @@ module.exports = (function () {
     }
     return page
     })())
-    if (index >= 0) this.pages.splice(index, 1)
+    if (index >= 0) this._pages.splice(index, 1)
     return this
   }
   Page.prototype.removeAll = function removeAll() {
-    this.pages = []
+    this._pages = []
     return this
   }
   Page.prototype.find = function find(url) {
-    return this.pages.find(function (item) { return item._url === url })
+    return this._pages.find(function (item) { return item._URL === url })
       || (function (self) {
-        var ancestor = self.pages.find(function (item) { return item.find(url) })
+        var ancestor = self._pages.find(function (item) { return item.find(url) })
         return (ancestor) ? ancestor.find(url) : null
       })(this)
   }
   Page.prototype.findAll = function findAll() {
-    return this.pages.slice()
+    return this._pages.slice()
   }
 
   // STATIC MEMBERS
