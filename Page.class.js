@@ -23,16 +23,16 @@ module.exports = (function () {
 
   Page.prototype.title = function title(arg) {
     if (arguments.length) {
-    this._title = (function () {
-    var text
-    if (typeof arg === 'function') {
-      text = arg.call(this)
-    } else {
-      text = arg
-    }
-    return text
-    })()
-    return this
+      this._title = (function (self) {
+        var text;
+        if (typeof arg === 'function') {
+          text = arg.call(self)
+        } else {
+          text = arg
+        }
+        return text
+      })(this)
+      return this
     } else {
     return this._title
     }
@@ -40,16 +40,16 @@ module.exports = (function () {
 
   Page.prototype.description = function description(arg) {
     if (arguments.length) {
-    this._description = (function () {
-    var text
-    if (typeof arg === 'function') {
-      text = arg.call(this)
-    } else {
-      text = arg
-    }
-    return text
-    })()
-    return this
+      this._description = (function (self) {
+        var text;
+        if (typeof arg === 'function') {
+          text = arg.call(self)
+        } else {
+          text = arg
+        }
+        return text
+      })(this)
+      return this
     } else {
       return this._description
     }
@@ -57,16 +57,16 @@ module.exports = (function () {
 
   Page.prototype.keywords = function keywords(arg) {
     if (arguments.length) {
-    this._keywords = (function () {
-    var arr
-    if (typeof arg === 'function') {
-      arr = arg.call(this)
-    } else {
-      arr = arg
-    }
-    return arr
-    })()
-    return this
+      this._keywords = (function (self) {
+        var arr;
+        if (typeof arg === 'function') {
+          arr = arg.call(self)
+        } else {
+          arr = arg
+        }
+        return arr
+      })(this)
+      return this
     } else {
       return this._keywords.slice()
     }
@@ -86,17 +86,17 @@ module.exports = (function () {
     return this
   }
   Page.prototype.remove = function remove(arg) {
-    var index = this._pages.indexOf((function () {
-    var page
-    if (typeof arg === 'function') {
-      page = arg.call(this)
-    } else if (typeof arg === 'string') {
-      page = this.getPage(arg)
-    } else {
-      page = arg
-    }
-    return page
-    })())
+    var index = this._pages.indexOf((function (self) {
+      var page
+      if (typeof arg === 'function') {
+        page = arg.call(self)
+      } else if (typeof arg === 'string') {
+        page = self.find(arg)
+      } else {
+        page = arg
+      }
+      return page
+    })(this))
     if (index >= 0) this._pages.splice(index, 1)
     return this
   }
