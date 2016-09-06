@@ -5,71 +5,79 @@ module.exports = (function () {
     $pageinfo = $pageinfo || {} // NOTE constructor overloading
     self._name = $pageinfo.name
     self._url  = $pageinfo.url
-    self.title       = ''
-    self.description = ''
-    self.keywords    = null
-    self.is_hidden   = false
-    self.pages       = []
+    self._title       = ''
+    self._description = ''
+    self._keywords    = []
+    self._is_hidden   = false
+    self.pages        = []
   }
 
   // ACCESSOR FUNCTIONS
-  Page.prototype.getName = function getName() {
+  Page.prototype.name = function name() {
     return this._name
   }
 
-  Page.prototype.getURL = function getURL() {
+  Page.prototype.url = function url() {
     return this._url
   }
 
-  Page.prototype.getTitle = function getTitle() {
-    return this.title
-  }
-  Page.prototype.setTitle = function setTitle(arg) {
+  Page.prototype.title = function title(arg) {
+    if (arguments.length) {
+    this._title = (function () {
     var text
     if (typeof arg === 'function') {
       text = arg.call(this)
     } else {
       text = arg
     }
-    this.title = text
+    return text
+    })()
     return this
+    } else {
+    return this._title
+    }
   }
 
-  Page.prototype.getDescription = function getDescription() {
-    return this.description
-  }
-  Page.prototype.setDescription = function setDescription(arg) {
+  Page.prototype.description = function description(arg) {
+    if (arguments.length) {
+    this._description = (function () {
     var text
     if (typeof arg === 'function') {
       text = arg.call(this)
     } else {
       text = arg
     }
-    this.description = text
+    return text
+    })()
     return this
+    } else {
+      return this._description
+    }
   }
 
-  Page.prototype.getKeywords = function getKeywords() {
-    return this.keywords.slice()
-  }
-  Page.prototype.setKeywords = function setKeywords(arg) {
+  Page.prototype.keywords = function keywords(arg) {
+    if (arguments.length) {
+    this._keywords = (function () {
     var arr
     if (typeof arg === 'function') {
       arr = arg.call(this)
     } else {
       arr = arg
     }
-    this.keywords = arr
+    return arr
+    })()
     return this
+    } else {
+      return this._keywords.slice()
+    }
   }
 
-  Page.prototype.isHidden = function isHidden() {
-    return this.is_hidden
-  }
   Page.prototype.hide = function hide(bool) {
-    // NOTE method overloading // param defaults to true
-    this.is_hidden = (bool === undefined) ? true : bool
+    this._is_hidden = (arguments.length) ? bool : true
     return this
+  }
+  Page.prototype.isHidden = function isHidden() {
+    return this._is_hidden
   }
 
   // METHODS
@@ -78,6 +86,7 @@ module.exports = (function () {
     return this
   }
   Page.prototype.remove = function remove(arg) {
+    var index = this.pages.indexOf((function () {
     var page
     if (typeof arg === 'function') {
       page = arg.call(this)
@@ -86,7 +95,8 @@ module.exports = (function () {
     } else {
       page = arg
     }
-    var index = this.pages.indexOf(page)
+    return page
+    })())
     if (index >= 0) this.pages.splice(index, 1)
     return this
   }
