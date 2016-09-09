@@ -2,6 +2,13 @@ var Page = require('./Page.class.js')
 
 module.exports = (function () {
   // CONSTRUCTOR
+  /**
+   * Construct a StyleGuide object, given a name and url.
+   * @constructor
+   * @extends Page
+   * @param {string} name the name of this styleguide
+   * @param {string} url  the url of the landing page of this styleguide
+   */
   function StyleGuide(name, url) {
     var self = this
     Page.call(self, { name: name, url: url })
@@ -13,6 +20,21 @@ module.exports = (function () {
   // ACCESSOR FUNCTIONS
 
   // METHODS
+  /**
+   * Initialize and add starting pages to this styleguide, then return it.
+   *
+   * Should be called every time `new StyleGuide()` is called,
+   * but AFTER `.title()` and `.description()` are called on it.
+   * This is because the pages initialized require the title
+   * and description of this style guide. E.g. this is the proper order:
+   * ```
+   * var sg = new StyleGuide('Example Style Guide', '//example.com/style-guide/')
+   *   .title('Style Guide of Example Dot Com')
+   *   .description('A reference for standard styles at Example Dot Com.')
+   *   .init()
+   * ```
+   * @return {StyleGuide} this styleguide
+   */
   StyleGuide.prototype.init = function init() {
     var self = this
     if (!self._was_initialized) {
