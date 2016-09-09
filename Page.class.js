@@ -3,106 +3,116 @@ module.exports = (function () {
   function Page($pageinfo) {
     var self = this
     $pageinfo = $pageinfo || {} // NOTE constructor overloading
-    self._name = $pageinfo.name
-    self._url  = $pageinfo.url
-    self.title       = ''
-    self.description = ''
-    self.keywords    = null
-    self.is_hidden   = false
-    self.pages       = []
+    self._NAME = $pageinfo.name
+    self._URL  = $pageinfo.url
+    self._title       = ''
+    self._description = ''
+    self._keywords    = []
+    self._is_hidden   = false
+    self._pages       = []
   }
 
   // ACCESSOR FUNCTIONS
-  Page.prototype.getName = function getName() {
-    return this._name
+  Page.prototype.name = function name() {
+    return this._NAME
   }
 
-  Page.prototype.getURL = function getURL() {
-    return this._url
+  Page.prototype.url = function url() {
+    return this._URL
   }
 
-  Page.prototype.getTitle = function getTitle() {
-    return this.title
-  }
-  Page.prototype.setTitle = function setTitle(arg) {
-    var text
-    if (typeof arg === 'function') {
-      text = arg.call(this)
+  Page.prototype.title = function title(arg) {
+    if (arguments.length) {
+      this._title = (function (self) {
+        var text;
+        if (typeof arg === 'function') {
+          text = arg.call(self)
+        } else {
+          text = arg
+        }
+        return text
+      })(this)
+      return this
     } else {
-      text = arg
+    return this._title
     }
-    this.title = text
-    return this
   }
 
-  Page.prototype.getDescription = function getDescription() {
-    return this.description
-  }
-  Page.prototype.setDescription = function setDescription(arg) {
-    var text
-    if (typeof arg === 'function') {
-      text = arg.call(this)
+  Page.prototype.description = function description(arg) {
+    if (arguments.length) {
+      this._description = (function (self) {
+        var text;
+        if (typeof arg === 'function') {
+          text = arg.call(self)
+        } else {
+          text = arg
+        }
+        return text
+      })(this)
+      return this
     } else {
-      text = arg
+      return this._description
     }
-    this.description = text
-    return this
   }
 
-  Page.prototype.getKeywords = function getKeywords() {
-    return this.keywords.slice()
-  }
-  Page.prototype.setKeywords = function setKeywords(arg) {
-    var arr
-    if (typeof arg === 'function') {
-      arr = arg.call(this)
+  Page.prototype.keywords = function keywords(arg) {
+    if (arguments.length) {
+      this._keywords = (function (self) {
+        var arr;
+        if (typeof arg === 'function') {
+          arr = arg.call(self)
+        } else {
+          arr = arg
+        }
+        return arr
+      })(this)
+      return this
     } else {
-      arr = arg
+      return this._keywords.slice()
     }
-    this.keywords = arr
-    return this
   }
 
-  Page.prototype.isHidden = function isHidden() {
-    return this.is_hidden
-  }
   Page.prototype.hide = function hide(bool) {
-    // NOTE method overloading // param defaults to true
-    this.is_hidden = (bool === undefined) ? true : bool
+    this._is_hidden = (arguments.length) ? bool : true
     return this
+  }
+  Page.prototype.isHidden = function isHidden() {
+    return this._is_hidden
   }
 
   // METHODS
   Page.prototype.add = function add($page) {
-    this.pages.push($page)
+    this._pages.push($page)
     return this
   }
   Page.prototype.remove = function remove(arg) {
-    var page
-    if (typeof arg === 'function') {
-      page = arg.call(this)
-    } else if (typeof arg === 'string') {
-      page = this.getPage(arg)
-    } else {
-      page = arg
-    }
-    var index = this.pages.indexOf(page)
-    if (index >= 0) this.pages.splice(index, 1)
+    var index = this._pages.indexOf((function (self) {
+      var page
+      if (typeof arg === 'function') {
+        page = arg.call(self)
+      } else if (typeof arg === 'string') {
+        page = self.find(arg)
+      } else {
+        page = arg
+      }
+      return page
+    })(this))
+    if (index >= 0) this._pages.splice(index, 1)
     return this
   }
   Page.prototype.removeAll = function removeAll() {
-    this.pages = []
+    this._pages = []
     return this
   }
   Page.prototype.find = function find(url) {
-    return this.pages.find(function (item) { return item._url === url })
+    return this._pages.find(function (item) { return item._URL === url })
       || (function (self) {
-        var ancestor = self.pages.find(function (item) { return item.find(url) })
+        var ancestor = self._pages.find(function (item) { return item.find(url) })
         return (ancestor) ? ancestor.find(url) : null
       })(this)
   }
   Page.prototype.findAll = function findAll() {
-    return this.pages.slice()
+    return this._pages.slice()
   }
 
   // STATIC MEMBERS
