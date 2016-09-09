@@ -34,7 +34,7 @@ module.exports = (function () {
       })(this)
       return this
     } else {
-    return this._title
+      return this._title
     }
   }
 
