@@ -49,19 +49,10 @@ module.exports = (function () {
    */
   Page.prototype.title = function title(arg) {
     if (arguments.length) {
-      this._title = (function (self) {
-        var text;
-        if (typeof arg === 'function') {
-          text = arg.call(self)
-        } else {
-          text = arg
-        }
-        return text
-      })(this)
+      this._title = (typeof arg === 'function') ? arg.call(this) : arg
       return this
-    } else {
-      return this._title
     }
+    return this._title
   }
 
   /**
@@ -73,19 +64,10 @@ module.exports = (function () {
    */
   Page.prototype.description = function description(arg) {
     if (arguments.length) {
-      this._description = (function (self) {
-        var text;
-        if (typeof arg === 'function') {
-          text = arg.call(self)
-        } else {
-          text = arg
-        }
-        return text
-      })(this)
+      this._description = (typeof arg === 'function') ? arg.call(this) : arg
       return this
-    } else {
-      return this._description
     }
+    return this._description
   }
 
   /**
@@ -97,19 +79,10 @@ module.exports = (function () {
    */
   Page.prototype.keywords = function keywords(arg) {
     if (arguments.length) {
-      this._keywords = (function (self) {
-        var arr;
-        if (typeof arg === 'function') {
-          arr = arg.call(self)
-        } else {
-          arr = arg
-        }
-        return arr
-      })(this)
+      this._keywords = (typeof arg === 'function') ? arg.call(this) : arg
       return this
-    } else {
-      return this._keywords.slice()
     }
+    return this._keywords.slice()
   }
 
   /**
