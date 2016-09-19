@@ -1,10 +1,14 @@
+/**
+ * A Page is an object with a name and url.
+ * Both the name and url are immutable (cannot be changed).
+ * The url is used as the page identifier; that is, no two pages within
+ * the same structure may have the same url.
+ * @type {Page}
+ */
 module.exports = (function () {
   // CONSTRUCTOR
   /**
    * Construct a Page object, given a name and url.
-   * Both the name and url are immutable (cannot be changed).
-   * The url is used as the page identifier; that is, no two pages within
-   * the same structure may have the same url.
    * @constructor
    * @param {Object} $pageinfo an object with `name` and `url` properties
    * @param {string} $pageinfo.name the name of this page

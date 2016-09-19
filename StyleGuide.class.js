@@ -1,11 +1,15 @@
 var Page = require('./Page.class.js')
 
+/**
+ * A StyleGuide object has a name and url, and a set of preset pages.
+ * @type {StyleGuide}
+ * @extends Page
+ */
 module.exports = (function () {
   // CONSTRUCTOR
   /**
    * Construct a StyleGuide object, given a name and url.
    * @constructor
-   * @extends Page
    * @param {string} name the name of this styleguide
    * @param {string} url  the url of the landing page of this styleguide
    */
