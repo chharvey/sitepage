@@ -55,8 +55,7 @@ module.exports = (function () {
     if (arguments.length) {
       this._title = (typeof arg === 'function') ? arg.call(this) : arg
       return this
-    }
-    return this._title
+    } else return this._title
   }
 
   /**
@@ -70,8 +69,7 @@ module.exports = (function () {
     if (arguments.length) {
       this._description = (typeof arg === 'function') ? arg.call(this) : arg
       return this
-    }
-    return this._description
+    } else return this._description
   }
 
   /**
@@ -85,8 +83,7 @@ module.exports = (function () {
     if (arguments.length) {
       this._keywords = (typeof arg === 'function') ? arg.call(this) : arg
       return this
-    }
-    return this._keywords.slice()
+    } else return this._keywords.slice()
   }
 
   /**
