@@ -113,6 +113,7 @@ module.exports = (function () {
     this._pages.push($page)
     return this
   }
+
   /**
    * Remove a sub-page from this page.
    * @param  {(function():string|string)} arg the url of the page to remove, or function to call
@@ -133,6 +134,7 @@ module.exports = (function () {
     if (index >= 0) this._pages.splice(index, 1)
     return this
   }
+
   /**
    * Remove all sub-pages from this page.
    * @return {Page} this page
@@ -141,6 +143,7 @@ module.exports = (function () {
     this._pages = []
     return this
   }
+
   /**
    * Find and return a descendant of this page.
    * @param  {string} url the url of the page to find
@@ -153,6 +156,7 @@ module.exports = (function () {
         return (ancestor) ? ancestor.find(url) : null
       })(this)
   }
+
   /**
    * Return a shallow copy of all sub-pages of this page.
    *
