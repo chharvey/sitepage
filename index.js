@@ -1,3 +1,1 @@
-module.exports = {
-  Page: require('./Page.class.js')
-}
+module.exports = require('./Page.class.js')
