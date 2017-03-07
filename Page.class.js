@@ -22,7 +22,6 @@ module.exports = (function () {
     self._title       = ''
     self._description = ''
     self._keywords    = []
-    self._is_hidden   = false
     self._pages       = []
   }
 
@@ -84,23 +83,6 @@ module.exports = (function () {
       this._keywords = (typeof arg === 'function') ? arg.call(this) : arg
       return this
     } else return this._keywords.slice()
-  }
-
-  /**
-   * Hide or show this page.
-   * @param  {boolean=true} bool hides or shows this page
-   * @return {Page} this page
-   */
-  Page.prototype.hide = function hide(bool) {
-    this._is_hidden = (arguments.length) ? bool : true
-    return this
-  }
-  /**
-   * Get the hidden status of this page.
-   * @return {boolean} true if this page is hidden; false otherwise
-   */
-  Page.prototype.isHidden = function isHidden() {
-    return this._is_hidden
   }
 
   // METHODS
