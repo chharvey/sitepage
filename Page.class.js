@@ -1,13 +1,10 @@
-/**
- * A Page is an object with a name and url.
- * Both the name and url are immutable (cannot be changed).
- * The url is used as the page identifier; that is, no two pages within
- * the same structure may have the same url.
- * @type {Page}
- */
 module.exports = (function () {
   // CONSTRUCTOR
   /**
+   * A Page is an object with a name and url.
+   * Both the name and url are immutable (cannot be changed).
+   * The url is used as the page identifier; that is, no two pages within
+   * the same structure may have the same url.
    * Construct a Page object, given a name and url.
    * @constructor
    * @param {Object} $pageinfo an object with `name` and `url` properties
@@ -75,7 +72,7 @@ module.exports = (function () {
    * Set or get the keywords of this page.
    * Set the argument, if given, as the keywords, and return this page.
    * Otherwise, return the keywords of this page.
-   * @param  {(function():string|Array=)} arg the keywords to set, or function to call
+   * @param  {(function():string|Array<string>=)} arg the keywords to set, or function to call
    * @return {(Page|string)} this page || the keywords of this page
    */
   Page.prototype.keywords = function keywords(arg) {
@@ -90,6 +87,7 @@ module.exports = (function () {
    * Add a sub-page to this page.
    * A sub-page is another page acting a child of this page in a tree/hierarchy.
    * @param {Page} $page an instance of the Page class
+   * @return {Page} this page
    */
   Page.prototype.add = function add($page) {
     this._pages.push($page)
@@ -103,15 +101,9 @@ module.exports = (function () {
    */
   Page.prototype.remove = function remove(arg) {
     var index = this._pages.indexOf((function (self) {
-      var page
-      if (typeof arg === 'function') {
-        page = arg.call(self)
-      } else if (typeof arg === 'string') {
-        page = self.find(arg)
-      } else {
-        page = arg
-      }
-      return page
+      if (typeof arg === 'function') return arg.call(self)
+      if (typeof arg === 'string')   return self.find(arg)
+      return arg
     })(this))
     if (index >= 0) this._pages.splice(index, 1)
     return this
