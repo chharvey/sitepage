@@ -102,14 +102,29 @@ module.exports = (function () {
 
   // METHODS
   /**
-   * Add a sub-page to this page.
-   * A sub-page is another page acting a child of this page in a tree/hierarchy.
-   * @param {Page} $page an instance of the Page class
+   * Add a subpage to this page, at the specified index.
+   * If no index is given, the subpage will be added to the end.
+   * Otherwise, the index acts as the first argument of
+   * [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice).
+   * A subpage is another page acting a child of this page in a tree/hierarchy.
+   * @param {Page} $page the Page object to add as a child of this page
+   * @param {number=} index index at which to insert the subpage, pushing subsequent subpages forward by 1
    * @return {Page} this page
    */
-  Page.prototype.add = function add($page) {
-    this._pages.push($page)
+  Page.prototype.add = function add($page, index) {
+    if (arguments.length >= 2) {
+      ;
+    } else return this.add($page, this._pages.length)
+    this._pages.splice(index, 0, $page)
     return this
+
+    // Equivalent:
+    // if (arguments.length >= 2) {
+    //   this._pages.splice(index, 0, $page)
+    // } else {
+    //   this._pages.push($page)
+    // }
+    // return this
   }
 
   /**
