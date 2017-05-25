@@ -128,8 +128,8 @@ module.exports = (function () {
   }
 
   /**
-   * Remove a sub-page from this page.
-   * @param  {(function():string|string)} arg the url of the page to remove, or function to call
+   * Remove a subpage from this page.
+   * @param  {(function():Page|string|Page)} arg the url of the subpage to remove, or function to call, or actual Page object
    * @return {Page} this page
    */
   Page.prototype.remove = function remove(arg) {
@@ -159,8 +159,8 @@ module.exports = (function () {
   Page.prototype.find = function find(url) {
     return this._pages.find(function (item) { return item._URL === url })
       || (function (self) {
-        var ancestor = self._pages.find(function (item) { return item.find(url) })
-        return (ancestor) ? ancestor.find(url) : null
+        var descendant = self._pages.find(function (item) { return item.find(url) })
+        return (descendant) ? descendant.find(url) : null
       })(this)
   }
 
