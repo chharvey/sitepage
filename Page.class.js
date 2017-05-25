@@ -7,13 +7,15 @@ module.exports = (function () {
    * the same structure may have the same url.
    * Construct a Page object, given a name and url.
    * @constructor
-   * @param {Object} $pageinfo an object with `name` and `url` properties
+   * @param {Object={}} $pageinfo an object with `name` and `url` properties
    * @param {string} $pageinfo.name the name of this page
    * @param {string} $pageinfo.url the url (and ID) of this page
    */
   function Page($pageinfo) {
+    if (arguments.length >= 1) {
+      ;
+    } else return Page.call(this, {})
     var self = this
-    $pageinfo = $pageinfo || {} // NOTE constructor overloading
     self._NAME = $pageinfo.name
     self._URL  = $pageinfo.url
     self._title       = ''
