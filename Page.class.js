@@ -16,19 +16,19 @@ module.exports = class Page {
    * @param {string}  $pageinfo.url the url (and ID) of this page
    */
   constructor($pageinfo = {}) {
-    this._NAME = $pageinfo.name
-    this._URL  = $pageinfo.url
-    this._title       = ''
-    this._description = ''
-    this._keywords    = []
-    this._pages       = []
+    /** @private @final */ this._NAME = $pageinfo.name
+    /** @private @final */ this._URL  = $pageinfo.url
+    /** @private */ this._title       = ''
+    /** @private */ this._description = ''
+    /** @private */ this._keywords    = []
+    /** @private */ this._pages       = []
   }
 
   /**
    * Get the name of this page.
    * @return {string} the name of this page
    */
-  name() {
+  get name() {
     return this._NAME
   }
 
@@ -36,7 +36,7 @@ module.exports = class Page {
    * Get the url of this page.
    * @return {string} the url of this page
    */
-  url() {
+  get url() {
     return this._URL
   }
 
@@ -74,7 +74,7 @@ module.exports = class Page {
    * Set the argument, if given, as the keywords, and return this page.
    * Otherwise, return the keywords of this page.
    * @param  {(function():string|Array<string>=)} arg the keywords to set, or function to call
-   * @return {(Page|string)} this page || the keywords of this page
+   * @return {(Page|Array<string>)} this page || the keywords of this page
    */
   keywords(arg) {
     if (arguments.length) {
@@ -125,7 +125,7 @@ module.exports = class Page {
    * @return {?Page} the page found, else `null`
    */
   find(url) {
-    return this._pages.find((item) => item.url()===url)
+    return this._pages.find((item) => item.url===url)
       || (function (self) {
         let ancestor = self._pages.find((item) => item.find(url))
         return (ancestor) ? ancestor.find(url) : null
