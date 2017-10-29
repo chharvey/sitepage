@@ -111,15 +111,12 @@ module.exports = (function () {
    * @param {number=} index index at which to insert the subpage, pushing subsequent subpages forward by 1
    * @return {Page} this page
    */
-  Page.prototype.add = function add($page, index) {
-    if (arguments.length >= 2) {
-      ;
-    } else return this.add($page, this._pages.length)
+  Page.prototype.add = function add($page, index = this._pages.length) {
     this._pages.splice(index, 0, $page)
     return this
 
     // Equivalent:
-    // if (arguments.length >= 2) {
+    // if (typeof index === 'number') {
     //   this._pages.splice(index, 0, $page)
     // } else {
     //   this._pages.push($page)
@@ -157,9 +154,9 @@ module.exports = (function () {
    * @return {?Page} the page found, else `null`
    */
   Page.prototype.find = function find(url) {
-    return this._pages.find(function (item) { return item._URL === url })
+    return this._pages.find((item) => item._URL === url)
       || (function (self) {
-        var descendant = self._pages.find(function (item) { return item.find(url) })
+        var descendant = self._pages.find((item) => item.find(url))
         return (descendant) ? descendant.find(url) : null
       })(this)
   }
