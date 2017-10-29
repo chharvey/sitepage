@@ -12,15 +12,14 @@ module.exports = (function () {
    * @param {string} $pageinfo.url the url (and ID) of this page
    */
   function Page($pageinfo) {
-    var self = this
     $pageinfo = $pageinfo || {} // NOTE constructor overloading
-    self._NAME = $pageinfo.name
-    self._URL  = $pageinfo.url
-    self._title       = ''
-    self._description = ''
-    self._keywords    = []
-    self._is_hidden   = false
-    self._pages       = []
+    this._NAME = $pageinfo.name
+    this._URL  = $pageinfo.url
+    this._title       = ''
+    this._description = ''
+    this._keywords    = []
+    this._is_hidden   = false
+    this._pages       = []
   }
 
   // ACCESSOR FUNCTIONS
@@ -130,11 +129,11 @@ module.exports = (function () {
    * @return {Page} this page
    */
   Page.prototype.remove = function remove(arg) {
-    var index = this._pages.indexOf((function (self) {
-      if (typeof arg === 'function') return arg.call(self)
-      if (typeof arg === 'string')   return self.find(arg)
+    var index = this._pages.indexOf((function () {
+      if (typeof arg === 'function') return arg.call(this)
+      if (typeof arg === 'string')   return this.find(arg)
       return arg
-    })(this))
+    }).call(this))
     if (index >= 0) this._pages.splice(index, 1)
     return this
   }
@@ -155,10 +154,10 @@ module.exports = (function () {
    */
   Page.prototype.find = function find(url) {
     return this._pages.find((item) => item._URL === url)
-      || (function (self) {
-        var descendant = self._pages.find((item) => item.find(url))
+      || (function () {
+        var descendant = this._pages.find((item) => item.find(url))
         return (descendant) ? descendant.find(url) : null
-      })(this)
+      }).call(this)
   }
 
   /**
