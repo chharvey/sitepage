@@ -85,25 +85,37 @@ module.exports = class Page {
 
 
   /**
-   * Add a sub-page to this page.
-   * A sub-page is another page acting a child of this page in a tree/hierarchy.
-   * @param {Page} $page an instance of the Page class
+   * Add a subpage to this page, at the specified index.
+   * If no index is given, the subpage will be added to the end.
+   * Otherwise, the index acts as the first argument of
+   * [Array.prototype.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice).
+   * A subpage is another page acting a child of this page in a tree/hierarchy.
+   * @param {Page} $page the Page object to add as a child of this page
+   * @param {number=} index index at which to insert the subpage, pushing subsequent subpages forward by 1
    * @return {Page} this page
    */
-  add($page) {
-    this._pages.push($page)
+  add($page, index = this._pages.length) {
+    this._pages.splice(index, 0, $page)
     return this
+
+    // Equivalent:
+    // if (typeof index === 'number') {
+    //   this._pages.splice(index, 0, $page)
+    // } else {
+    //   this._pages.push($page)
+    // }
+    // return this
   }
 
   /**
-   * Remove a sub-page from this page.
-   * @param  {(function():string|string)} arg the url of the page to remove, or function to call
+   * Remove a subpage from this page.
+   * @param  {(function():Page|string|Page)} arg the url of the subpage to remove, or function to call, or actual Page object
    * @return {Page} this page
    */
   remove(arg) {
     let index = this._pages.indexOf(
       (typeof arg === 'function') ? arg.call(this)
-    : (typeof arg === 'string') ? this.find(arg)
+    : (typeof arg === 'string')   ? this.find(arg)
     : arg
     )
     if (index >= 0) this._pages.splice(index, 1)
@@ -126,10 +138,10 @@ module.exports = class Page {
    */
   find(url) {
     return this._pages.find((item) => item.url===url)
-      || (function (self) {
-        let ancestor = self._pages.find((item) => item.find(url))
-        return (ancestor) ? ancestor.find(url) : null
-      })(this)
+      || (function () {
+        let descendant = this._pages.find((item) => item.find(url))
+        return (descendant) ? descendant.find(url) : null
+      }).call(this)
   }
 
   /**
